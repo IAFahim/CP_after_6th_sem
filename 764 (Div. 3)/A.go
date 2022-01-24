@@ -9,14 +9,14 @@ import (
 	"strings"
 )
 
-type CF1626A struct {
+type A struct {
 	sc        *bufio.Reader
 	split     []string
 	index     int
 	separator string
 }
 
-func (in *CF1626A) GetLine() string {
+func (in *A) GetLine() string {
 	line, err := in.sc.ReadString('\n')
 	if err != nil {
 		fmt.Println("error line:", line, " err: ", err)
@@ -25,36 +25,36 @@ func (in *CF1626A) GetLine() string {
 	in.index = 0
 	return line
 }
-func (in *CF1626A) load() {
+func (in *A) load() {
 	if len(in.split) <= in.index {
 		in.split = strings.Split(in.GetLine(), in.separator)
 		in.index = 0
 	}
 }
 
-func (in *CF1626A) nextInt() int {
+func (in *A) nextInt() int {
 	in.load()
 	val, _ := strconv.Atoi(strings.TrimSpace(in.split[in.index]))
 	in.index++
 	return val
 }
 
-func (in *CF1626A) nextInt64() int64 {
+func (in *A) nextInt64() int64 {
 	in.load()
 	val, _ := strconv.ParseInt(strings.TrimSpace(in.split[in.index]), 10, 64)
 	in.index++
 	return val
 }
 
-func (in *CF1626A) nextString() string {
+func (in *A) nextString() string {
 	in.load()
 	val := strings.TrimSpace(in.split[in.index])
 	in.index++
 	return val
 }
 
-func NewCF1626A(r *bufio.Reader) *CF1626A {
-	return &CF1626A{
+func newa(r *bufio.Reader) *A {
+	return &A{
 		sc:        r,
 		split:     []string{},
 		index:     0,
@@ -62,7 +62,7 @@ func NewCF1626A(r *bufio.Reader) *CF1626A {
 	}
 }
 
-func (in *CF1626A) run() {
+func (in *A) run() {
 	T := in.nextInt()
 
 	for t := 0; t < T; t++ {
@@ -79,6 +79,7 @@ func (in *CF1626A) run() {
 		}
 		fmt.Println(max - min)
 	}
+
 }
 
 func main() {
@@ -93,6 +94,5 @@ func main() {
 	defer func(file *os.File) {
 		_ = file.Close()
 	}(file)
-	NewCF1626A(F).run()
-
+	newa(F).run()
 }

@@ -8,27 +8,27 @@ import (
 	"strings"
 )
 
-func (in *B) run() {
+func (in *A) run() {
 	T := in.nextInt()
 	for t := 0; t < T; t++ {
-		a, b, c := in.nextInt(), in.nextInt(), in.nextInt()
-		if ((c-a)/2+a)%b == 0 {
-			println("YES", a, b, c)
+		str := in.nextString()
+		h := len(str) / 2
+		if str[:h] == str[h:] {
+			fmt.Println("YES")
 		} else {
-			println("NO", a, b, c)
+			fmt.Println("NO")
 		}
-
 	}
 }
 
-type B struct {
+type A struct {
 	sc        *bufio.Reader
 	split     []string
 	index     int
 	separator string
 }
 
-func (in *B) GetLine() string {
+func (in *A) GetLine() string {
 	line, err := in.sc.ReadString('\n')
 	if err != nil {
 		fmt.Println("error line:", line, " err: ", err)
@@ -38,36 +38,36 @@ func (in *B) GetLine() string {
 	return line
 }
 
-func (in *B) load() {
+func (in *A) load() {
 	if len(in.split) <= in.index {
 		in.split = strings.Split(in.GetLine(), in.separator)
 		in.index = 0
 	}
 }
 
-func (in *B) nextInt() int {
+func (in *A) nextInt() int {
 	in.load()
 	val, _ := strconv.Atoi(strings.TrimSpace(in.split[in.index]))
 	in.index++
 	return val
 }
 
-func (in *B) nextInt64() int64 {
+func (in *A) nextInt64() int64 {
 	in.load()
 	val, _ := strconv.ParseInt(strings.TrimSpace(in.split[in.index]), 10, 64)
 	in.index++
 	return val
 }
 
-func (in *B) nextString() string {
+func (in *A) nextString() string {
 	in.load()
 	val := strings.TrimSpace(in.split[in.index])
 	in.index++
 	return val
 }
 
-func NewB(r *bufio.Reader) *B {
-	return &B{
+func NewA(r *bufio.Reader) *A {
+	return &A{
 		sc:        r,
 		split:     []string{},
 		index:     0,
@@ -87,5 +87,5 @@ func main() {
 	defer func(file *os.File) {
 		_ = file.Close()
 	}(file)
-	NewB(F).run()
+	NewA(F).run()
 }

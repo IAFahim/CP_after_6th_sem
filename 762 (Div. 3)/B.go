@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -11,13 +12,11 @@ import (
 func (in *B) run() {
 	T := in.nextInt()
 	for t := 0; t < T; t++ {
-		a, b, c := in.nextInt(), in.nextInt(), in.nextInt()
-		if ((c-a)/2+a)%b == 0 {
-			println("YES", a, b, c)
-		} else {
-			println("NO", a, b, c)
-		}
-
+		x := float64(in.nextInt())
+		a := math.Sqrt(x)
+		b := math.Cbrt(x)
+		c := int32(math.Sqrt(b))
+		fmt.Println(int32(a) + int32(b) - c)
 	}
 }
 
