@@ -8,22 +8,23 @@ import (
 	"strings"
 )
 
+func (in *A) sum(x int) int {
+	s := 0
+	for 0 < x {
+		s += x % 10
+		x /= 10
+	}
+	return s
+}
+
 func (in *A) run() {
-	n, x, y := in.nextInt(), in.nextInt(), in.nextInt()
-	a, _ := 0, 0
-	str := in.nextString()
-	for i := n - x; i < n; i++ {
-		if str[i] == '1' {
-			a++
+	n := in.nextInt()
+	for i := n; i <= 10000; i++ {
+		if in.sum(i)%4 == 0 {
+			fmt.Println(i)
+			break
 		}
 	}
-	if str[n-y-1] == '0' {
-		a++
-	} else {
-		a--
-	}
-	fmt.Println(a)
-
 }
 
 func main() {
