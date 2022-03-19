@@ -9,28 +9,42 @@ import (
 	"strings"
 )
 
+type Pair struct {
+	val   int
+	index int
+}
+type ByValIndex []Pair
+
+func (e ByValIndex) Len() int {
+	return len(e)
+}
+
+func (e ByValIndex) Less(i, j int) bool {
+	if e[i].val == e[j].val {
+		return e[i].index < e[j].index
+	}
+	return e[i].val < e[j].val
+}
+
+func (e ByValIndex) Swap(i, j int) {
+	e[i], e[j] = e[j], e[i]
+}
+
 func (in *B) run() {
 	n := in.nextInt()
-	d := in.nextInt()
-	arr := make([]int, n)
+	k := in.nextInt()
+
+	pair := ByValIndex{}
 	for i := 0; i < n; i++ {
-		arr[i] = in.nextInt()
+		val := in.nextInt()
+		pair = append(pair, Pair{
+			val:   val,
+			index: i,
+		})
 	}
-	sort.Ints(arr)
-	e := n / d
-	s := 0
-	for i := n - d; i < n; i++ {
-		s += arr[i]
-	}
-	fmt.Println(s)
-	for i := 1; i < d; i++ {
-		fmt.Print(e)
-		fmt.Print(" ")
-		n -= e
-	}
-	if n != 0 {
-		fmt.Println(n)
-	}
+	sort.Sort(pair)
+	fmt.Printf("%v %d", pair, k)
+
 }
 
 type B struct {
