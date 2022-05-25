@@ -22,14 +22,16 @@ func (sc *B) run() {
 		sb := strings.Builder{}
 		sb.WriteString(arr[0])
 		for i := 1; i < n-2; i++ {
-			if arr[i-1][1] == arr[i][0] {
-				sb.WriteByte(arr[i-1][0])
-				sb.WriteByte(arr[i][1])
-			} else {
+			if arr[i-1][1] != arr[i][0] && arr[i][0] != arr[i][1] {
 				sb.WriteString(arr[i])
+			} else {
+				sb.WriteByte(arr[i][1])
 			}
 		}
-		fmt.Println(sb.String())
+		if n != sb.Len() {
+			sb.WriteByte(sb.String()[sb.Len()-1])
+		}
+		fmt.Println(sb.String()[0:n])
 	}
 }
 
