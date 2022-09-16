@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-//couldn't solve
+// couldn't solve
 func (in *B) run() {
 	t := in.nextInt()
 	found := false
@@ -55,7 +55,7 @@ func (in *B) run() {
 }
 
 func main() {
-	file, err := os.Open("input.txt")
+	file, err := os.Open("in.txt")
 	var F *bufio.Reader
 	if err == nil {
 		F = bufio.NewReader(file)

@@ -26,7 +26,7 @@ func (in *B) run() {
 }
 
 func main() {
-	file, err := os.Open("input.txt")
+	file, err := os.Open("in.txt")
 	var F *bufio.Reader
 	if err == nil {
 		F = bufio.NewReader(file)

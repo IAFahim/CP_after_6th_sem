@@ -8,23 +8,22 @@ import (
 	"strings"
 )
 
-func (in *${NAME}) run(out *bufio.Writer) {
+func (in *${NAME}) run() {
     #[[$END$]]#
 }
 
 func main() {
-	file, err := os.Open("input.txt")
 	var F *bufio.Reader
-	if err == nil {
-		F = bufio.NewReader(file)
-		os.Stdin = file
+	in, inErr := os.Open("in.txt")
+	if inErr == nil {
+		F = bufio.NewReader(in)
 	} else {
 		F = bufio.NewReader(os.Stdin)
 	}
 	defer func(file *os.File) {
 		_ = file.Close()
-	}(file)
-	New${NAME}(F).run(bufio.NewWriter(os.Stdout))
+	}(in)
+	New${NAME}(F).run(W)
 }
 
 func New${NAME}(r *bufio.Reader) *${NAME} {

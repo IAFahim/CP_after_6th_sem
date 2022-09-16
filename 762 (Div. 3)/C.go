@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-///xxxx
+// /xxxx
 func reverse(s string) string {
 	r := []rune(s)
 	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
@@ -108,7 +108,7 @@ func NewC(r *bufio.Reader) *C {
 }
 
 func main() {
-	file, err := os.Open("input.txt")
+	file, err := os.Open("in.txt")
 	var F *bufio.Reader
 	if err == nil {
 		F = bufio.NewReader(file)

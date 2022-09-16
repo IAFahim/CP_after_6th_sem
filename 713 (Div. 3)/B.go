@@ -8,23 +8,54 @@ import (
 	"strings"
 )
 
-func (in *B) run(out *bufio.Writer) {
+func (in *B) run() {
+	t := in.nextInt()
+	for i := 0; i < t; i++ {
+		n := in.nextInt()
+		cm := make([][]byte, n)
+		for i := 0; i < n; i++ {
+			cm[i] = []byte(in.nextString())
+		}
+		point := []complex64{complex(0, 0), complex(0, 0)}
+		c := 0
+		for y := 0; y < n; y++ {
+			for x := 0; x < n; x++ {
+				if cm[y][x] == '*' {
+					point[c] = complex(float32(x), float32(y))
+					c++
+				}
+			}
+		}
 
+		if real(point[0]) == real(point[1]) {
+			cm[(int(imag(point[0])))%n][(int(real(point[0]))+1)%n] = '*'
+			cm[(int(imag(point[1])))%n][(int(real(point[1]))+1)%n] = '*'
+		} else if imag(point[0]) == imag(point[1]) {
+			cm[(int(imag(point[0]))+1)%n][(int(real(point[0])))%n] = '*'
+			cm[(int(imag(point[1]))+1)%n][(int(real(point[1])))%n] = '*'
+		} else {
+			cm[(int(imag(point[0])))%n][(int(real(point[1])))] = '*'
+			cm[(int(imag(point[1])))%n][(int(real(point[0])))] = '*'
+
+		}
+		for y := 0; y < n; y++ {
+			Printf("%s\n", string(cm[y]))
+		}
+	}
 }
 
 func main() {
-	file, err := os.Open("input.txt")
 	var F *bufio.Reader
-	if err == nil {
-		F = bufio.NewReader(file)
-		os.Stdin = file
+	in, inErr := os.Open("in.txt")
+	if inErr == nil {
+		F = bufio.NewReader(in)
 	} else {
 		F = bufio.NewReader(os.Stdin)
 	}
 	defer func(file *os.File) {
 		_ = file.Close()
-	}(file)
-	NewB(F).run(bufio.NewWriter(os.Stdout))
+	}(in)
+	NewB(F).run()
 }
 
 func NewB(r *bufio.Reader) *B {

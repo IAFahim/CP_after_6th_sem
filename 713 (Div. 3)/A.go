@@ -26,7 +26,6 @@ func (in *A) run(out *bufio.Writer) {
 		for _, v := range mp {
 			if v.count == 1 {
 				Fprintln(out, v.idx+1)
-				Println(v.idx + 1)
 				break
 			}
 		}
@@ -34,18 +33,32 @@ func (in *A) run(out *bufio.Writer) {
 }
 
 func main() {
-	file, err := os.Open("input.txt")
 	var F *bufio.Reader
-	if err == nil {
-		F = bufio.NewReader(file)
-		os.Stdin = file
+	var W *bufio.Writer
+	in, inErr := os.Open("in.txt")
+	out, outErr := os.Create("out.txt")
+	if inErr == nil {
+		F = bufio.NewReader(in)
 	} else {
 		F = bufio.NewReader(os.Stdin)
 	}
+	created := false
+	if outErr == nil {
+		created = true
+		W = bufio.NewWriter(out)
+	} else {
+		W = bufio.NewWriter(os.Stdout)
+	}
 	defer func(file *os.File) {
 		_ = file.Close()
-	}(file)
-	NewA(F).run(bufio.NewWriter(os.Stdout))
+	}(in)
+	defer func(file *os.File) {
+		if created {
+			_ = W.Flush()
+		}
+		_ = file.Close()
+	}(out)
+	NewA(F).run(W)
 }
 
 func NewA(r *bufio.Reader) *A {

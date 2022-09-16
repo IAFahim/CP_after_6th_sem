@@ -9,7 +9,7 @@ import (
 )
 
 func (in *Ascii) run() {
-	f, err := os.OpenFile("E:\\CSE332\\Assigment\\random input.txt", os.O_TRUNC|os.O_RDWR, 0660)
+	f, err := os.OpenFile("E:\\CSE332\\Assigment\\random in.txt", os.O_TRUNC|os.O_RDWR, 0660)
 	if err != nil {
 		fmt.Println("couldn't open")
 	}
@@ -29,7 +29,7 @@ func (in *Ascii) run() {
 }
 
 func main() {
-	file, err := os.Open("input.txt")
+	file, err := os.Open("in.txt")
 	var F *bufio.Reader
 	if err == nil {
 		F = bufio.NewReader(file)
